@@ -4,6 +4,11 @@ import {mutableHandlers,reactiveFlags} from './baseHandler'
 
 const reactiveMap = new WeakMap() //key 只能是对象
 
+export function isReactive(value){
+    return value && value[reactiveFlags.IS_REACTIVE]
+
+}
+
 // 将数据转换成响应式数据
 export function reactive(target){
         if(!isObject(target))  {

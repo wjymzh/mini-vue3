@@ -56,7 +56,7 @@ var VueReactivity = (() => {
   };
   function effect(fn) {
     const _effect = new ReactiveEffect(fn);
-    _effect.run;
+    _effect.run();
   }
   var targetMap = /* @__PURE__ */ new WeakMap();
   function track(target, type, key) {

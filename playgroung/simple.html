@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script>
+      // 3.createAppAPI
+      const createAppAPI = (render) => {
+        return function createApp(rootComponent) {
+          // 返回应用程序实例
+          const app = {
+            mount(rootContainer) {
+              // 挂载vnode => dom
+              const vnode = {
+                tag: rootComponent,
+              };
+              // 执行渲染
+              render(vnode, rootContainer);
+            },
+          };
+          return app;
+        };
+      };
+
+      // 1. 创建createApp
+      const Vue = {
+        createApp(options) {
+          //实际执行的为renderer的createApp()
+          // 返回app实例
+          return renderer.createApp(options);
+        },
+      };
+
+      // 2.实现renderer工厂函数
+      const createRenderer = (options) => {
+        // 实现patch
+        const patch = (n1, n2, container) => {
+          // 获取根组件配置
+          const rootComponent = n2.tag;
+          // 获取上下文
+          const ctx = { ...rootComponent.data() };
+          // 执行render获取vnode
+          const vnode = rootComponent.render.call(ctx);
+
+          // 转换vnode => dom
+          const parent = options.querySelector(container);
+          const child = options.createElement(vnode.tag);
+          if (typeof vnode.children === "string") {
+            child.textContent = vnode.children;
+          } else {
+            //array如果有多个儿子
+          }
+          // 追加
+          options.insert(child, parent);
+        };
+
+        // 实现render
+        const render = (vnode, container) => {
+          patch(container._vnode || null, vnode, container);
+          container._vnode = vnode;
+        };
+
+        // 该对象就是renderer
+        return {
+          render,
+          createApp: createAppAPI(render),
+        };
+      };
+
+      const renderer = createRenderer({
+        querySelector(el) {
+          return document.querySelector(el);
+        },
+        createElement(tag) {
+          return document.createElement(tag);
+        },
+        insert(child, parent) {
+          parent.appendChild(child);
+        },
+      });
+
+      Vue.createApp({
+        data() {
+          return {
+            bar: "hello,vue3",
+          };
+        },
+        render() {
+          return {
+            tag: "h1",
+            children: this.bar,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "name": "@vue/reactivity",
+  "name": "@vue/vue",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "build": "tsc"
   },
   "buildOptions": {
-    "name": "VueReactivity",
+    "name": "Vue",
     "formats": [
       "global",
       "cjs",

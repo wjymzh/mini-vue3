@@ -1,15 +1,18 @@
 {
-    "name": "@vue/runtime-dom",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "buildOptions": {
-      "name": "VueRuntimeCORE",
-      "formats": [
-        "global",
-        "cjs",
-        "esm-bundler"
-      ]
-    }
+  "name": "@vue/runtime-dom",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc -w",
+    "build": "tsc"
+  },
+  "buildOptions": {
+    "name": "VueRuntimeCORE",
+    "formats": [
+      "global",
+      "cjs",
+      "esm-bundler"
+    ]
   }
-  
+}

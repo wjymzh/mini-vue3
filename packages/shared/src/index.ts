@@ -1,6 +1,14 @@
+export * from "./patchFlags";
+export * from "./slotFlags";
+
+export const EMPTY_OBJ: { readonly [key: string]: any } = {};
+export const NOOP = () => {};
+
 export const isObject = (value) => {
   return typeof value === "object" && value !== null;
 };
+
+export const NO = () => false;
 
 export const isString = (value) => {
   return typeof value === "string";
@@ -19,7 +27,6 @@ export const hasChanged = (val, newVal) => !Object.is(val, newVal); // 比对两
 export const isArray = Array.isArray;
 export const assign = Object.assign;
 
-
 export const enum ShapeFlags {
   ELEMENT = 1, // HTML 或 SVG 标签 普通 DOM 元素
   FUNCTIONAL_COMPONENT = 1 << 1, // 函数式组件
@@ -31,5 +38,5 @@ export const enum ShapeFlags {
   SUSPENSE = 1 << 7, // Supspense
   COMPONENT_SHOULD_KEEP_ALIVE = 1 << 8, // 需要被keep-live的有状态组件
   COMPONENT_KEPT_ALIVE = 1 << 9, //已经被keep-live的有状态组件
-  COMPONENT = ShapeFlags.STATEFUL_COMPONENT | ShapeFlags.FUNCTIONAL_COMPONENT // 有状态组件和函数组件都是组件，用component表示
+  COMPONENT = ShapeFlags.STATEFUL_COMPONENT | ShapeFlags.FUNCTIONAL_COMPONENT, // 有状态组件和函数组件都是组件，用component表示
 }

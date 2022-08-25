@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 官方的完整版Demo -->
+    <!-- <script src="https://unpkg.com/vue@3.2.37/dist/vue.global.js"></script> -->
+    <!-- 自己实现的vue-demo -->
+    <script src="../packages/runtime-dom/dist/runtime-dom.global.js"></script>
+  </head>
+  <body>
+    <!-- 挂载内容的区块 -->
+    <div id="app">
+      <div>static node</div>
+      <div>跟组件的{{title}}</div>
+      <button @click="add">click</button>
+      <!-- 按钮如果放在子组件后面为什么会不渲染-->
+      <Item :msg="title+1" />
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+
+      const Item = {
+        props: ["msg"],
+        template: `<div>子组件的{{ msg }}</div>`,
+      }; // 定义一个子组件，并且给他传递一个msg的值
+
+      // 定义一个根组件
+      const App = {
+        components: {
+          Item,
+        },
+        setup() {
+          //执行时间再什么时候呢
+          const title = ref(0);
+
+          function add() {
+            title.value += 1;
+          }
+          return {
+            add,
+            title,
+          };
+        },
+      };
+
+      const app = createApp(App);
+      app.mount("#app");
+    </script>
+  </body>
+</html>
